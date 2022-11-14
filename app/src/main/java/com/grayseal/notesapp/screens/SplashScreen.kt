@@ -2,8 +2,13 @@ package com.grayseal.notesapp.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,7 +34,8 @@ fun SplashScreen(navController: NavController) {
 
 @Composable
 fun Content() {
-    val imageModifier = Modifier.size(400.dp)
+    val imageModifier = Modifier
+        .size(400.dp)
         .padding(top = 30.dp)
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         Image(painter = painterResource(id = R.drawable.splash),
@@ -39,5 +45,25 @@ fun Content() {
         Text("Don't use paper again.", style = (TextStyle(color = Color(0xFF736064), fontSize = 25.sp)), fontFamily = sonoFamily, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(10.dp))
         Text("Capture life beautifully", style = (TextStyle(fontSize = 18.sp, color = Color.Black)), fontFamily = sonoFamily, fontWeight = FontWeight.ExtraLight)
+        Spacer(Modifier.weight(1f))
+        Next()
+    }
+}
+
+@Composable
+fun Next(){
+    val next by remember {
+        mutableStateOf(false)
+    }
+    NextIconButton(next = next, onClick = { /*TODO*/ })
+}
+@Composable
+private fun NextIconButton(
+    next: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    IconButton(onClick = onClick) {
+        Icon(imageVector = Icons.Filled.ArrowForward, modifier = Modifier.size(40.dp), contentDescription = "Arrow Forward", tint = Color(0xFFcc9054))
     }
 }
