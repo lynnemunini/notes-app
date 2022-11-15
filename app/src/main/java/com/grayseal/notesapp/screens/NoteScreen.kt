@@ -46,10 +46,10 @@ fun NoteContent(navController: NavController) {
                     selected = false,
                     onClick = { /*TODO*/ },
                     icon = {
-                        Icon(modifier = Modifier.size(60.dp), imageVector = Icons.Outlined.EmojiNature, contentDescription = "Notes", tint = Color(0xFFefcd95))
+                        Icon(modifier = Modifier.size(60.dp), imageVector = Icons.Outlined.EmojiNature, contentDescription = "Notes", tint = Color(0xFFefcd95).copy(alpha = 0.9f))
                     },
                     text = {
-                        Text("Note", color = Color(0xFFefcd95), style = (TextStyle(fontSize = 30.sp, fontFamily = sonoFamily, fontWeight = FontWeight.Bold)))
+                        Text("Note", color = Color(0xFFefcd95).copy(alpha = 0.9f), style = (TextStyle(fontSize = 30.sp, fontFamily = sonoFamily, fontWeight = FontWeight.Bold)))
                     })
             }
             Row(modifier = Modifier
