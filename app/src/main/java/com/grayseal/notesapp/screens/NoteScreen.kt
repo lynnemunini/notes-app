@@ -1,6 +1,5 @@
 package com.grayseal.notesapp.screens
 
-import android.provider.ContactsContract
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -74,7 +73,7 @@ fun Note(note: String, onNoteChange: (String) -> Unit){
     val keyboardController = LocalSoftwareKeyboardController.current
     Row(horizontalArrangement = Arrangement.Start){
         TextField(
-            modifier = Modifier.padding(start = 4.dp),
+            modifier = Modifier.padding(4.dp).fillMaxWidth(),
             value = note,
             onValueChange = onNoteChange,
             placeholder = {
@@ -86,15 +85,16 @@ fun Note(note: String, onNoteChange: (String) -> Unit){
             keyboardActions = KeyboardActions {
                 keyboardController?.hide()
             },
-            colors = TextFieldDefaults.outlinedTextFieldColors(
+            colors = TextFieldDefaults.textFieldColors(
                 textColor = Color.LightGray,
-                focusedBorderColor = Color(0xFFFFFFFF),
-                unfocusedBorderColor = Color(0xFFFFFFFF),
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
                 cursorColor = Color(0xFF4c6569),
+                backgroundColor = MaterialTheme.colors.background,
                 placeholderColor = Color.LightGray
             )
         )
-
     }
 }
 fun getCurrentDate(): String {
