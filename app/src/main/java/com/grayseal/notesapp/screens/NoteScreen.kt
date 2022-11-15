@@ -1,12 +1,16 @@
 package com.grayseal.notesapp.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.LeadingIconTab
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -20,6 +24,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.grayseal.notesapp.navigation.NoteScreens
 import com.grayseal.notesapp.ui.theme.sonoFamily
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -27,11 +32,11 @@ import java.time.format.FormatStyle
 
 @Composable
 fun NoteScreen(navController: NavController) {
-    NoteContent()
+    NoteContent(navController = navController)
 }
 
 @Composable
-fun NoteContent() {
+fun NoteContent(navController: NavController) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             Row(modifier = Modifier
@@ -41,7 +46,7 @@ fun NoteContent() {
                     selected = false,
                     onClick = { /*TODO*/ },
                     icon = {
-                        Icon(modifier = Modifier.size(50.dp), imageVector = Icons.Outlined.Add, contentDescription = "Notes", tint = Color(0xFFdaaac0))
+                        Icon(modifier = Modifier.size(50.dp), imageVector = Icons.Outlined.Add, contentDescription = "Notes", tint = Color(0xFFefcd95))
                     },
                     text = {
                         Text("Notes", style = (TextStyle(fontSize = 25.sp, fontFamily = sonoFamily, fontWeight = FontWeight.Bold)))
@@ -49,7 +54,12 @@ fun NoteContent() {
             }
             Row(modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 80.dp, bottom = 20.dp, start = 20.dp), horizontalArrangement = Arrangement.Start) {
+                .padding(top = 40.dp, start = 20.dp, end = 20.dp), horizontalArrangement = Arrangement.End) {
+                SaveButton(navController = navController)
+            }
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 40.dp, bottom = 20.dp, start = 20.dp, end = 20.dp), horizontalArrangement = Arrangement.Start) {
                 Text(getCurrentDate(), style = (TextStyle(fontSize = 18.sp, color = Color.Black)), fontFamily = sonoFamily, fontWeight = FontWeight.Normal)
             }
             NoteArea()
@@ -73,11 +83,13 @@ fun Note(note: String, onNoteChange: (String) -> Unit){
     val keyboardController = LocalSoftwareKeyboardController.current
     Row(horizontalArrangement = Arrangement.Start){
         TextField(
-            modifier = Modifier.padding(4.dp).fillMaxWidth(),
+            modifier = Modifier
+                .padding(4.dp)
+                .fillMaxWidth(),
             value = note,
             onValueChange = onNoteChange,
             placeholder = {
-                Text(text = "Write down something...", fontSize = 18.sp, fontFamily = sonoFamily, fontWeight = FontWeight.Light)
+                Text(text = "Write down something...",color = Color.LightGray, fontSize = 18.sp, fontFamily = sonoFamily, fontWeight = FontWeight.Light)
             },
             singleLine = false,
             textStyle = TextStyle(fontSize = 18.sp, color = colors.onBackground, fontFamily = sonoFamily, fontWeight = FontWeight.Normal),
@@ -92,11 +104,23 @@ fun Note(note: String, onNoteChange: (String) -> Unit){
                 disabledIndicatorColor = Color.Transparent,
                 cursorColor = Color(0xFF4c6569),
                 backgroundColor = MaterialTheme.colors.background,
-                placeholderColor = Color.LightGray
             )
         )
     }
 }
+
+@Composable
+fun SaveButton(navController: NavController) {
+    TextButton(
+        onClick = {navController.navigate(route = NoteScreens.WelcomeScreen.name)},
+        enabled = true,
+        contentPadding = PaddingValues(5.dp),
+        colors = ButtonDefaults.textButtonColors(contentColor = Color(0xFFdaaac0))
+    ) {
+        Text("Save", style = (TextStyle(color = Color(0xFFdaaac0), fontSize = 25.sp)), fontFamily = sonoFamily, fontWeight = FontWeight.Bold)
+    }
+}
+
 fun getCurrentDate(): String {
     // Get Current Date time in localized style
     val current = LocalDateTime.now()

@@ -113,5 +113,4 @@ fun StartButton(navController: NavController) {
     ) {
         Text("Start", style = (TextStyle(fontSize = 20.sp, color = Color.White)), fontFamily = sonoFamily, fontWeight = FontWeight.Normal)
     }
-
 }
