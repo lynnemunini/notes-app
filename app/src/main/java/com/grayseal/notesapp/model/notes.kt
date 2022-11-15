@@ -32,5 +32,16 @@ val notes = listOf(
             date = "15 Nov 2022",
             note = "Remember to complete mobile applications development assignment before 26th November"
         ),
-
+        Note(
+            id = "1",
+            title = "Mobile Applications Assignment",
+            date = "15 Nov 2022",
+            note = "Remember to complete mobile applications development assignment before 26th November"
+        ),
+        Note(
+            id = "1",
+            title = "Mobile Applications Assignment",
+            date = "15 Nov 2022",
+            note = "Remember to complete mobile applications development assignment before 26th November"
+        ),
     )
