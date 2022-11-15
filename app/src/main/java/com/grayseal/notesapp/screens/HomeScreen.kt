@@ -66,14 +66,14 @@ fun NoteCard(note: Note){
         ) {
             Text(note.title, fontSize = 18.sp, color = Color.DarkGray, fontFamily = sonoFamily, fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(15.dp))
-            Text(note.note, fontSize = 14.sp, color = Color.LightGray, fontFamily = sonoFamily, fontWeight = FontWeight.Normal)
+            Text(note.note, fontSize = 14.sp, color = Color(0xFF92a4a2), fontFamily = sonoFamily, fontWeight = FontWeight.Normal)
             Spacer(Modifier.height(15.dp))
         }
         Row(modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp), horizontalArrangement = Arrangement.End) {
             Spacer(Modifier.height(15.dp))
-            Text(note.date, fontSize = 12.sp, color = Color(0xFF92a4a2), fontFamily = sonoFamily, fontStyle = FontStyle.Italic)
+            Text(note.date, fontSize = 12.sp, color = Color.LightGray, fontFamily = sonoFamily, fontStyle = FontStyle.Italic)
         }
     }
 }
