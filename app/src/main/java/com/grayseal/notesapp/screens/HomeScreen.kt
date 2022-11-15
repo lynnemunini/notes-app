@@ -10,6 +10,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,15 +24,17 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.grayseal.notesapp.model.Note
 import com.grayseal.notesapp.model.notes
+import com.grayseal.notesapp.navigation.NoteScreens
 import com.grayseal.notesapp.ui.theme.Grey
 import com.grayseal.notesapp.ui.theme.sonoFamily
 
 @Composable
 fun HomeScreen(navController: NavController) {
     Column(modifier = Modifier.fillMaxWidth()) {
+            AddNote(navController = navController)
             Row(modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 40.dp, start = 20.dp), horizontalArrangement = Arrangement.Start){
+                .padding(top = 10.dp, start = 20.dp), horizontalArrangement = Arrangement.Start){
                 Text(text = "Saved Notes", style = (TextStyle(color = Color(0xFFdaaac0), fontSize = 30.sp)), fontFamily = sonoFamily, fontWeight = FontWeight.Bold)
             }
             HomeContent(navController = navController)
@@ -74,6 +78,24 @@ fun NoteCard(note: Note){
             .padding(8.dp), horizontalArrangement = Arrangement.End) {
             Spacer(Modifier.height(15.dp))
             Text(note.date, fontSize = 12.sp, color = Color.LightGray, fontFamily = sonoFamily, fontStyle = FontStyle.Italic)
+        }
+    }
+}
+
+@Composable
+fun AddNote(navController: NavController) {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .padding(top = 20.dp, end = 5.dp), horizontalArrangement = Arrangement.End) {
+        IconButton(
+            onClick = {navController.navigate(route = NoteScreens.NoteScreen.name)})
+        {
+            Icon(
+                modifier = Modifier.size(100.dp),
+                imageVector = Icons.Outlined.Add,
+                contentDescription = "Add Note",
+                tint = Color(0xFFefcd95)
+            )
         }
     }
 }

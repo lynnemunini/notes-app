@@ -41,25 +41,25 @@ fun NoteContent(navController: NavController) {
         Column(modifier = Modifier.fillMaxSize()) {
             Row(modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 20.dp), horizontalArrangement = Arrangement.Center) {
+                .padding(top = 30.dp), horizontalArrangement = Arrangement.Center) {
                 LeadingIconTab(
                     selected = false,
                     onClick = { /*TODO*/ },
                     icon = {
-                        Icon(modifier = Modifier.size(50.dp), imageVector = Icons.Outlined.Add, contentDescription = "Notes", tint = Color(0xFFefcd95))
+                        Icon(modifier = Modifier.size(60.dp), imageVector = Icons.Outlined.EmojiNature, contentDescription = "Notes", tint = Color(0xFFefcd95))
                     },
                     text = {
-                        Text("Notes", style = (TextStyle(fontSize = 25.sp, fontFamily = sonoFamily, fontWeight = FontWeight.Bold)))
+                        Text("Note", color = Color(0xFFefcd95), style = (TextStyle(fontSize = 30.sp, fontFamily = sonoFamily, fontWeight = FontWeight.Bold)))
                     })
             }
             Row(modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 40.dp, start = 20.dp, end = 20.dp), horizontalArrangement = Arrangement.End) {
+                .padding(top = 20.dp, start = 20.dp, end = 20.dp), horizontalArrangement = Arrangement.End) {
                 SaveButton(navController = navController)
             }
             Row(modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 40.dp, bottom = 20.dp, start = 20.dp, end = 20.dp), horizontalArrangement = Arrangement.Start) {
+                .padding(top = 30.dp, bottom = 10.dp, start = 20.dp, end = 20.dp), horizontalArrangement = Arrangement.Start) {
                 Text(getCurrentDate(), style = (TextStyle(fontSize = 18.sp, color = Color.Black)), fontFamily = sonoFamily, fontWeight = FontWeight.Normal)
             }
             NoteArea()
@@ -112,12 +112,12 @@ fun Note(note: String, onNoteChange: (String) -> Unit){
 @Composable
 fun SaveButton(navController: NavController) {
     TextButton(
-        onClick = {navController.navigate(route = NoteScreens.WelcomeScreen.name)},
+        onClick = {navController.navigate(route = NoteScreens.HomeScreen.name)},
         enabled = true,
         contentPadding = PaddingValues(5.dp),
         colors = ButtonDefaults.textButtonColors(contentColor = Color(0xFFdaaac0))
     ) {
-        Text("Save", style = (TextStyle(color = Color(0xFFdaaac0), fontSize = 25.sp)), fontFamily = sonoFamily, fontWeight = FontWeight.Bold)
+        Text("Save", style = (TextStyle(color = Color(0xFFdaaac0), fontSize = 30.sp)), fontFamily = sonoFamily, fontWeight = FontWeight.Bold)
     }
 }
 
