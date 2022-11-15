@@ -54,8 +54,8 @@ private fun NextIconButton(
     onClick: () -> Unit
 ) {
     FilledTonalIconButton(modifier = Modifier.size(60.dp), onClick = onClick, colors = IconButtonDefaults.filledTonalIconButtonColors(containerColor = Color(0xFFdaaac0)),) {
-        Icon(imageVector = Icons.Outlined.NavigateNext,
-            modifier = Modifier.size(40.dp),
+        Icon(imageVector = Icons.Outlined.Fingerprint,
+            modifier = Modifier.size(50.dp),
             contentDescription = "Next",
             tint = Color.White)
     }
