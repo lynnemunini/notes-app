@@ -46,8 +46,8 @@ fun NoteContent() {
                         Text("Notes", style = (TextStyle(fontSize = 25.sp, fontFamily = sonoFamily, fontWeight = FontWeight.Bold)))
                     })
             }
-            Row() {
-                Text(getCurrentDate())
+            Row(modifier = Modifier.fillMaxWidth().padding(top = 40.dp, bottom = 40.dp, end = 40.dp), horizontalArrangement = Arrangement.End) {
+                Text(getCurrentDate(), style = (TextStyle(fontSize = 18.sp, color = Color.Black)), fontFamily = sonoFamily, fontWeight = FontWeight.Normal)
             }
         }
     }
