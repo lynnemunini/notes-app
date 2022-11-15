@@ -6,10 +6,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.DoubleArrow
-import androidx.compose.material.icons.outlined.FiberNew
-import androidx.compose.material.icons.outlined.Fingerprint
-import androidx.compose.material.icons.outlined.Kitesurfing
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,7 +53,10 @@ fun SplashContent(navController: NavController) {
 private fun NextIconButton(
     onClick: () -> Unit
 ) {
-    IconButton(onClick = onClick) {
-        Icon(imageVector = Icons.Outlined.Fingerprint, modifier = Modifier.size(60.dp), contentDescription = "Fingerprint", tint = Color(0xFFdaaac0))
+    FilledTonalIconButton(onClick = onClick, colors = IconButtonDefaults.filledTonalIconButtonColors(containerColor = Color(0xFFdaaac0)),) {
+        Icon(imageVector = Icons.Outlined.NavigateNext,
+            //modifier = Modifier.size(60.dp),
+            contentDescription = "Fingerprint",
+            tint = Color.White)
     }
 }

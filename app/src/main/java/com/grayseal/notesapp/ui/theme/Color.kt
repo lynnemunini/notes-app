@@ -2,7 +2,8 @@ package com.grayseal.notesapp.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val White = Color(0xFFFFFFFF)
+val Grey = Color(0xFF92a4a2)
+val Pink200 = Color(0xFFdeb7c5)
+val Pink500 = Color(0xFFdaaac0)
+val Pink700 = Color(0xFFaf7184)
