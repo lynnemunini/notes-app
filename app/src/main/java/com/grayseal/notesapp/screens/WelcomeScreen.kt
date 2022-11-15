@@ -105,7 +105,7 @@ fun StartButton(navController: NavController) {
         modifier = Modifier
             .width(130.dp)
             .height(50.dp),
-        onClick = {navController.navigate(route = NoteScreens.WelcomeScreen.name)},
+        onClick = {navController.navigate(route = NoteScreens.NoteScreen.name)},
         enabled = true,
         shape = RoundedCornerShape(20.dp),
         contentPadding = PaddingValues(5.dp),
