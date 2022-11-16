@@ -60,7 +60,7 @@ fun NoteContent(navController: NavController) {
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 30.dp, bottom = 10.dp, start = 20.dp, end = 20.dp), horizontalArrangement = Arrangement.Start) {
-                Text(getCurrentDate(), style = (TextStyle(fontSize = 18.sp, color = Color.Black)), fontFamily = sonoFamily, fontWeight = FontWeight.Normal)
+                Text(getCurrentDate(), style = (TextStyle(fontSize = 18.sp, color = Color(0xFFefcd95))), fontFamily = sonoFamily, fontWeight = FontWeight.Normal)
             }
             NoteArea()
         }
@@ -72,19 +72,46 @@ fun NoteArea(){
     var note by remember {
         mutableStateOf("")
     }
-    Note(note = note, onNoteChange = {
-        note = it
-    })
+    var title by remember {
+        mutableStateOf("")
+    }
+    Note(title = title, note = note, onTitleChange = { title = it },  onNoteChange = { note = it })
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun Note(note: String, onNoteChange: (String) -> Unit){
+fun Note(title: String, note: String, onTitleChange: (String) -> Unit, onNoteChange: (String) -> Unit){
     val keyboardController = LocalSoftwareKeyboardController.current
+
     Row(horizontalArrangement = Arrangement.Start){
         TextField(
             modifier = Modifier
-                .padding(4.dp)
+                .fillMaxWidth(),
+            value = title,
+            onValueChange = onTitleChange,
+            placeholder = {
+                Text(text = "Note Title",color = Color.DarkGray, fontSize = 18.sp, fontFamily = sonoFamily, fontWeight = FontWeight.Normal)
+            },
+            singleLine = true,
+            textStyle = TextStyle(fontSize = 18.sp, color = Color.DarkGray, fontFamily = sonoFamily, fontWeight = FontWeight.Normal),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii, imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions {
+                keyboardController?.hide()
+            },
+            colors = TextFieldDefaults.textFieldColors(
+                textColor = Color.LightGray,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+                cursorColor = Color(0xFF4c6569),
+                backgroundColor = MaterialTheme.colors.background,
+            )
+        )
+    }
+
+    Row(horizontalArrangement = Arrangement.Start){
+        TextField(
+            modifier = Modifier
                 .fillMaxWidth(),
             value = note,
             onValueChange = onNoteChange,
