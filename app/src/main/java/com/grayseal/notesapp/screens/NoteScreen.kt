@@ -1,5 +1,7 @@
 package com.grayseal.notesapp.screens
 
+import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -17,6 +19,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -24,6 +27,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.grayseal.notesapp.R
 import com.grayseal.notesapp.navigation.NoteScreens
 import com.grayseal.notesapp.ui.theme.sonoFamily
 import java.time.LocalDateTime
@@ -54,21 +58,16 @@ fun NoteContent(navController: NavController) {
             }
             Row(modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 20.dp, start = 20.dp, end = 20.dp), horizontalArrangement = Arrangement.End) {
-                SaveButton(navController = navController)
-            }
-            Row(modifier = Modifier
-                .fillMaxWidth()
                 .padding(top = 30.dp, bottom = 10.dp, start = 20.dp, end = 20.dp), horizontalArrangement = Arrangement.Start) {
                 Text(getCurrentDate(), style = (TextStyle(fontSize = 18.sp, color = Color(0xFFefcd95))), fontFamily = sonoFamily, fontWeight = FontWeight.Normal)
             }
-            NoteArea()
+            NoteArea(navController = navController)
         }
     }
 }
 
 @Composable
-fun NoteArea(){
+fun NoteArea(navController: NavController){
     var note by remember {
         mutableStateOf("")
     }
@@ -76,6 +75,7 @@ fun NoteArea(){
         mutableStateOf("")
     }
     Note(title = title, note = note, onTitleChange = { title = it },  onNoteChange = { note = it })
+    SaveButton(navController =navController, title, note)
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -137,14 +137,58 @@ fun Note(title: String, note: String, onTitleChange: (String) -> Unit, onNoteCha
 }
 
 @Composable
-fun SaveButton(navController: NavController) {
-    TextButton(
-        onClick = {navController.navigate(route = NoteScreens.HomeScreen.name)},
-        enabled = true,
-        contentPadding = PaddingValues(5.dp),
-        colors = ButtonDefaults.textButtonColors(contentColor = Color(0xFFdaaac0))
+fun SaveButton(navController: NavController, title: String, note: String) {
+    var openDialog by remember {
+        mutableStateOf(false)
+    }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 20.dp, start = 20.dp, end = 20.dp),
+        horizontalArrangement = Arrangement.End
     ) {
-        Text("Save", style = (TextStyle(color = Color(0xFFdaaac0), fontSize = 30.sp)), fontFamily = sonoFamily, fontWeight = FontWeight.Bold)
+        AlertDialog(openDialog = openDialog, onDismiss = {
+            openDialog = false
+        })
+        TextButton(
+            onClick = {
+                if (title.isNotEmpty() && note.isNotEmpty()) {
+                    navController.navigate(route = NoteScreens.HomeScreen.name)
+                }
+                else {
+                    openDialog = true
+                } },
+            enabled = true,
+            contentPadding = PaddingValues(5.dp),
+            colors = ButtonDefaults.textButtonColors(contentColor = Color(0xFFdaaac0))
+        ) {
+            Text(
+                "Save",
+                style = (TextStyle(color = Color(0xFFdaaac0), fontSize = 30.sp)),
+                fontFamily = sonoFamily,
+                fontWeight = FontWeight.Bold
+            )
+        }
+    }
+}
+
+@Composable
+fun AlertDialog(openDialog: Boolean, onDismiss: () -> Unit){
+    if (openDialog) {
+        AlertDialog(
+            /* Dismiss the dialog when the user clicks outside the dialog or on the back
+                   button. If you want to disable that functionality, simply use an empty
+                   onDismissRequest. */
+            onDismissRequest = onDismiss,
+            text = {
+                Text(text = "Please enter Note title and note")
+            },
+            confirmButton = {
+                TextButton(onClick = onDismiss) {
+                    Text("Ok")
+                }
+            }
+        )
     }
 }
 
