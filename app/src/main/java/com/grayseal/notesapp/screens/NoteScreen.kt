@@ -1,5 +1,6 @@
 package com.grayseal.notesapp.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -15,6 +16,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key.Companion.D
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -23,6 +26,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.grayseal.notesapp.model.Note
 import com.grayseal.notesapp.navigation.NoteScreens
 import com.grayseal.notesapp.ui.theme.sonoFamily
 import java.time.LocalDateTime
@@ -77,10 +81,13 @@ fun NoteArea(navController: NavController) {
     var note by remember {
         mutableStateOf("")
     }
+    val notesData = remember{
+        mutableListOf<Note>()
+    }
     var title by remember {
         mutableStateOf("")
     }
-    SaveButton(navController = navController, title, note)
+    SaveButton(navController = navController, title, note, onSaveNote = {notesData.add(it)})
     Note(title = title, note = note, onTitleChange = { title = it }, onNoteChange = { note = it })
 }
 
@@ -193,10 +200,11 @@ fun Note(
 }
 
 @Composable
-fun SaveButton(navController: NavController, title: String, note: String) {
+fun SaveButton(navController: NavController, title: String, note: String, onSaveNote: (Note) -> Unit) {
     var openDialog by remember {
         mutableStateOf(false)
     }
+    val context = LocalContext.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -209,6 +217,12 @@ fun SaveButton(navController: NavController, title: String, note: String) {
         TextButton(
             onClick = {
                 if (title.isNotEmpty() && note.isNotEmpty()) {
+                    onSaveNote(Note(title = title, note = note))
+                    Toast.makeText(context, "Note Saved", Toast.LENGTH_SHORT).show()
+                    /*Save data
+                    title = ""
+                    note = ""
+                    */
                     navController.navigate(route = NoteScreens.HomeScreen.name)
                 } else {
                     openDialog = true
@@ -277,9 +291,14 @@ fun AlertDialog(openDialog: Boolean, onDismiss: () -> Unit) {
     }
 }
 
+fun updateNote(note: Note, onSaveNote: (Note) -> Unit){
+
+
+}
+
 fun getCurrentDate(): String {
     // Get Current Date time in localized style
     val current = LocalDateTime.now()
-    val formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+    val formatter = DateTimeFormatter.ofPattern("EEE, d MMM y")
     return current.format(formatter)
 }

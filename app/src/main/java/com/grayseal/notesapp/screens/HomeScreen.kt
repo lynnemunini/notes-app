@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -15,11 +16,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -31,7 +32,7 @@ import com.grayseal.notesapp.ui.theme.sonoFamily
 @Composable
 fun HomeScreen(navController: NavController) {
     Scaffold(
-        floatingActionButton = { AddNote(navController = navController)},
+        floatingActionButton = { FloatingAddNoteButton(navController = navController)},
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Avatar()
@@ -48,7 +49,7 @@ fun HomeScreen(navController: NavController) {
                 )
             }
             HomeContent(navController = navController)
-            AddNote(navController = navController)
+            FloatingAddNoteButton(navController = navController)
         }
     }
     }
@@ -71,10 +72,11 @@ fun NoteCard(note: Note){
     OutlinedCard(onClick = { /* Do something */ },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 10.dp, bottom = 20.dp),
+            .padding(top = 10.dp, bottom = 20.dp)
+            .clip(RoundedCornerShape(10.dp)),
         colors = CardDefaults.outlinedCardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(4.dp),
-        border = BorderStroke(0.2.dp, color = Color(0xFFefcd95))
+        border = BorderStroke(0.2.dp, color = Color(0xFFefcd95)),
     ) {
         Column(
             modifier = Modifier
@@ -90,19 +92,20 @@ fun NoteCard(note: Note){
             .fillMaxWidth()
             .padding(8.dp), horizontalArrangement = Arrangement.End) {
             Spacer(Modifier.height(15.dp))
-            Text(note.date, fontSize = 12.sp, color = Color.LightGray, fontFamily = sonoFamily, fontStyle = FontStyle.Italic)
+            Text(note.date,fontSize = 12.sp, color = Color.LightGray, fontFamily = sonoFamily)
         }
     }
 }
 
 @Composable
-fun AddNote(navController: NavController) {
+fun FloatingAddNoteButton(navController: NavController) {
         FloatingActionButton(
             modifier = Modifier.padding(bottom = 30.dp),
             onClick = { navController.navigate(route = NoteScreens.NoteScreen.name) },
             //shape = CircleShape,
             containerColor = Color(0xFFefcd95)
         )
+
         {
             Icon(
                 imageVector = Icons.Sharp.Edit,
@@ -111,6 +114,7 @@ fun AddNote(navController: NavController) {
             )
         }
 }
+
 
 @Composable
 fun Avatar(){
