@@ -48,6 +48,7 @@ fun NoteContent(navController: NavController) {
                 .padding(top = 30.dp), horizontalArrangement = Arrangement.Center) {
                 LeadingIconTab(
                     selected = false,
+                    enabled = false,
                     onClick = { /*TODO*/ },
                     icon = {
                         Icon(modifier = Modifier.size(60.dp), imageVector = Icons.Outlined.EmojiNature, contentDescription = "Notes", tint = Color(0xFFefcd95).copy(alpha = 0.9f))
@@ -55,11 +56,6 @@ fun NoteContent(navController: NavController) {
                     text = {
                         Text("Note", color = Color(0xFFefcd95).copy(alpha = 0.9f), style = (TextStyle(fontSize = 30.sp, fontFamily = sonoFamily, fontWeight = FontWeight.Bold)))
                     })
-            }
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 30.dp, bottom = 10.dp, start = 20.dp, end = 20.dp), horizontalArrangement = Arrangement.Start) {
-                Text(getCurrentDate(), style = (TextStyle(fontSize = 18.sp, color = Color(0xFFefcd95))), fontFamily = sonoFamily, fontWeight = FontWeight.Normal)
             }
             NoteArea(navController = navController)
         }
@@ -74,8 +70,8 @@ fun NoteArea(navController: NavController){
     var title by remember {
         mutableStateOf("")
     }
-    Note(title = title, note = note, onTitleChange = { title = it },  onNoteChange = { note = it })
     SaveButton(navController =navController, title, note)
+    Note(title = title, note = note, onTitleChange = { title = it },  onNoteChange = { note = it })
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -83,6 +79,14 @@ fun NoteArea(navController: NavController){
 fun Note(title: String, note: String, onTitleChange: (String) -> Unit, onNoteChange: (String) -> Unit){
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    /*Date Row*/
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .padding(top = 30.dp, bottom = 10.dp, start = 15.dp), horizontalArrangement = Arrangement.Start) {
+        Text(getCurrentDate(), style = (TextStyle(fontSize = 18.sp, color = Color(0xFFefcd95))), fontFamily = sonoFamily, fontWeight = FontWeight.Normal)
+    }
+
+    /*Note Title Row*/
     Row(horizontalArrangement = Arrangement.Start){
         TextField(
             modifier = Modifier
@@ -109,6 +113,7 @@ fun Note(title: String, note: String, onTitleChange: (String) -> Unit, onNoteCha
         )
     }
 
+    /*Note Description Row*/
     Row(horizontalArrangement = Arrangement.Start){
         TextField(
             modifier = Modifier
@@ -180,12 +185,29 @@ fun AlertDialog(openDialog: Boolean, onDismiss: () -> Unit){
                    button. If you want to disable that functionality, simply use an empty
                    onDismissRequest. */
             onDismissRequest = onDismiss,
+            title = {
+                Row() {
+                    Icon(
+                        imageVector = Icons.Outlined.Info,
+                        contentDescription = "Alert",
+                        tint = Color(0xFFefcd95),
+                    )
+
+                    Text(
+                        "Alert",
+                        color = Color(0xFFefcd95),
+                        fontSize = 20.sp,
+                        fontFamily = sonoFamily,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            },
             text = {
-                Text(text = "Please enter Note title and note")
+                Text(modifier = Modifier.padding(start = 5.dp), text = "Please enter Note title and note", color = colors.onBackground, fontSize = 18.sp, fontFamily = sonoFamily, fontWeight = FontWeight.Normal)
             },
             confirmButton = {
                 TextButton(onClick = onDismiss) {
-                    Text("Ok")
+                    Text("OK", style = (TextStyle(color = Color(0xFFdaaac0), fontSize = 20.sp)), fontFamily = sonoFamily, fontWeight = FontWeight.Bold)
                 }
             }
         )
