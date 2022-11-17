@@ -16,7 +16,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.key.Key.Companion.D
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
@@ -25,13 +24,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.grayseal.notesapp.model.Note
 import com.grayseal.notesapp.navigation.NoteScreens
 import com.grayseal.notesapp.ui.theme.sonoFamily
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 @Composable
 fun NoteScreen(navController: NavController) {
@@ -77,17 +76,14 @@ fun NoteContent(navController: NavController) {
 }
 
 @Composable
-fun NoteArea(navController: NavController) {
+fun NoteArea(navController: NavController, noteViewModel: NoteViewModel = viewModel()) {
     var note by remember {
         mutableStateOf("")
-    }
-    val notesData = remember{
-        mutableListOf<Note>()
     }
     var title by remember {
         mutableStateOf("")
     }
-    SaveButton(navController = navController, title, note, onSaveNote = {notesData.add(it)})
+    SaveButton(navController = navController, title, note, onSaveNote = { noteViewModel.addNote(it) })
     Note(title = title, note = note, onTitleChange = { title = it }, onNoteChange = { note = it })
 }
 
@@ -200,7 +196,12 @@ fun Note(
 }
 
 @Composable
-fun SaveButton(navController: NavController, title: String, note: String, onSaveNote: (Note) -> Unit) {
+fun SaveButton(
+    navController: NavController,
+    title: String,
+    note: String,
+    onSaveNote: (Note) -> Unit
+) {
     var openDialog by remember {
         mutableStateOf(false)
     }
@@ -223,7 +224,7 @@ fun SaveButton(navController: NavController, title: String, note: String, onSave
                     title = ""
                     note = ""
                     */
-                    navController.navigate(route = NoteScreens.HomeScreen.name)
+                    navController.navigate(route = NoteScreens.HomeScreen.name, )
                 } else {
                     openDialog = true
                 }
@@ -289,11 +290,6 @@ fun AlertDialog(openDialog: Boolean, onDismiss: () -> Unit) {
             }
         )
     }
-}
-
-fun updateNote(note: Note, onSaveNote: (Note) -> Unit){
-
-
 }
 
 fun getCurrentDate(): String {

@@ -10,22 +10,18 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.Eco
 import androidx.compose.material.icons.sharp.Edit
-import androidx.compose.material.icons.sharp.Face
-import androidx.compose.material.icons.sharp.FlutterDash
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.grayseal.notesapp.model.Note
-import com.grayseal.notesapp.model.notes
 import com.grayseal.notesapp.navigation.NoteScreens
 import com.grayseal.notesapp.ui.theme.sonoFamily
 
@@ -33,33 +29,37 @@ import com.grayseal.notesapp.ui.theme.sonoFamily
 fun HomeScreen(navController: NavController) {
     Scaffold(
         floatingActionButton = { FloatingAddNoteButton(navController = navController)},
-    ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-            Avatar()
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 5.dp, start = 20.dp, bottom = 10.dp), horizontalArrangement = Arrangement.Start
-            ) {
-                Text(
-                    text = "Saved Notes",
-                    style = (TextStyle(color = Color(0xFFdaaac0), fontSize = 30.sp)),
-                    fontFamily = sonoFamily,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-            HomeContent(navController = navController)
-            FloatingAddNoteButton(navController = navController)
-        }
-    }
+        content = { padding ->
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .padding(padding)) {
+                Avatar()
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 5.dp, start = 20.dp, bottom = 10.dp),
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    Text(
+                        text = "Saved Notes",
+                        style = (TextStyle(color = Color(0xFFdaaac0), fontSize = 30.sp)),
+                        fontFamily = sonoFamily,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                HomeContent()
+            }},)
     }
 
 
 @Composable
-fun HomeContent(navController: NavController) {
+fun HomeContent(noteViewModel: NoteViewModel = viewModel()) {
+
+    /*get all Notes*/
+    val notesList = noteViewModel.getAllNotes()
     Column(modifier = Modifier.padding(20.dp)) {
         LazyColumn{
-            items(notes){
+            items(notesList){
                 NoteCard(note = it)
             }
         }
@@ -68,8 +68,9 @@ fun HomeContent(navController: NavController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NoteCard(note: Note){
-    OutlinedCard(onClick = { /* Do something */ },
+fun NoteCard(note: Note, noteViewModel: NoteViewModel = viewModel()){
+    OutlinedCard(onClick = {
+        /*noteViewModel.removeNote(note) TODO*/},
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 10.dp, bottom = 20.dp)
@@ -99,22 +100,21 @@ fun NoteCard(note: Note){
 
 @Composable
 fun FloatingAddNoteButton(navController: NavController) {
-        FloatingActionButton(
-            modifier = Modifier.padding(bottom = 30.dp),
-            onClick = { navController.navigate(route = NoteScreens.NoteScreen.name) },
-            //shape = CircleShape,
-            containerColor = Color(0xFFefcd95)
+    FloatingActionButton(
+        modifier = Modifier.padding(bottom = 30.dp),
+        onClick = { navController.navigate(route = NoteScreens.NoteScreen.name) },
+        //shape = CircleShape,
+        containerColor = Color(0xFFefcd95)
+    )
+
+    {
+        Icon(
+            imageVector = Icons.Sharp.Edit,
+            contentDescription = "Add Note",
+            tint = Color.White
         )
-
-        {
-            Icon(
-                imageVector = Icons.Sharp.Edit,
-                contentDescription = "Add Note",
-                tint = Color.White
-            )
-        }
+    }
 }
-
 
 @Composable
 fun Avatar(){

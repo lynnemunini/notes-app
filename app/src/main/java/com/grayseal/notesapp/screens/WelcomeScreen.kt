@@ -6,13 +6,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.EmojiNature
 import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -24,7 +20,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -38,11 +33,11 @@ fun WelcomeScreen(navController: NavController) {
 
 @Composable
 fun Name(navController: NavController) {
-    var name by remember{
+    var name by remember {
         mutableStateOf("")
     }
 
-    WelcomeContent(navController = navController, name = name, onNameChange = {name = it})
+    WelcomeContent(navController = navController, name = name, onNameChange = { name = it })
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -62,25 +57,45 @@ fun WelcomeContent(navController: NavController, name: String, onNameChange: (St
             modifier = imageModifier
         )
         Spacer(modifier = Modifier.height(10.dp))
-        Text("This notes book belongs to", style = (TextStyle(fontSize = 18.sp, color = Color.Black)), fontFamily = sonoFamily, fontWeight = FontWeight.Normal)
+        Text(
+            "This notes book belongs to",
+            style = (TextStyle(fontSize = 18.sp, color = Color.Black)),
+            fontFamily = sonoFamily,
+            fontWeight = FontWeight.Normal
+        )
         Spacer(modifier = Modifier.height(20.dp))
         TextField(
             modifier = Modifier.padding(start = 15.dp),
             value = name,
             onValueChange = onNameChange,
             placeholder = {
-                          Text(text = "What's your name?", fontSize = 18.sp, fontFamily = sonoFamily, fontWeight = FontWeight.Light)
+                Text(
+                    text = "What's your name?",
+                    fontSize = 18.sp,
+                    fontFamily = sonoFamily,
+                    fontWeight = FontWeight.Light
+                )
             },
             leadingIcon = {
                 Icon(
-                    modifier = Modifier.size(50.dp).padding(end = 12.dp),
+                    modifier = Modifier
+                        .size(50.dp)
+                        .padding(end = 12.dp),
                     imageVector = Icons.Outlined.EmojiNature,
                     contentDescription = "Nature Icon",
                 )
             },
             singleLine = true,
-            textStyle = TextStyle(fontSize = 18.sp, color = MaterialTheme.colors.onBackground, fontFamily = sonoFamily, fontWeight = FontWeight.Normal),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii, imeAction = ImeAction.Done),
+            textStyle = TextStyle(
+                fontSize = 18.sp,
+                color = MaterialTheme.colors.onBackground,
+                fontFamily = sonoFamily,
+                fontWeight = FontWeight.Normal
+            ),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Ascii,
+                imeAction = ImeAction.Done
+            ),
             keyboardActions = KeyboardActions {
                 keyboardController?.hide()
             },
@@ -105,12 +120,21 @@ fun StartButton(navController: NavController) {
         modifier = Modifier
             .width(130.dp)
             .height(50.dp),
-        onClick = {navController.navigate(route = NoteScreens.HomeScreen.name)},
+        onClick = { navController.navigate(route = NoteScreens.HomeScreen.name) },
         enabled = true,
         shape = RoundedCornerShape(20.dp),
         contentPadding = PaddingValues(5.dp),
-        colors = androidx.compose.material3.ButtonDefaults.buttonColors(containerColor = Color(0xFFdaaac0))
+        colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+            containerColor = Color(
+                0xFFdaaac0
+            )
+        )
     ) {
-        Text("Start", style = (TextStyle(fontSize = 20.sp, color = Color.White)), fontFamily = sonoFamily, fontWeight = FontWeight.Normal)
+        Text(
+            "Start",
+            style = (TextStyle(fontSize = 20.sp, color = Color.White)),
+            fontFamily = sonoFamily,
+            fontWeight = FontWeight.Normal
+        )
     }
 }

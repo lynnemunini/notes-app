@@ -10,7 +10,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.grayseal.notesapp.navigation.NoteNavigation
+import com.grayseal.notesapp.screens.NoteViewModel
 import com.grayseal.notesapp.ui.theme.NotesAppTheme
 
 class MainActivity : ComponentActivity() {
