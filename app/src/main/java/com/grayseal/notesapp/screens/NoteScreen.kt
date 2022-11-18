@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.grayseal.notesapp.model.Note
 import com.grayseal.notesapp.navigation.NoteScreens
@@ -82,11 +83,7 @@ fun NoteArea(navController: NavController, noteViewModel: NoteViewModel) {
     var title by remember {
         mutableStateOf("")
     }
-    SaveButton(
-        navController = navController,
-        title,
-        note,
-        onSaveNote = { noteViewModel.addNote(it) })
+    SaveButton(navController = navController, title, note, onSaveNote = { noteViewModel.addNote(it) })
     Note(title = title, note = note, onTitleChange = { title = it }, onNoteChange = { note = it })
 }
 
@@ -227,7 +224,7 @@ fun SaveButton(
                     title = ""
                     note = ""
                     */
-                    navController.navigate(route = NoteScreens.HomeScreen.name)
+                    navController.navigate(route = NoteScreens.HomeScreen.name, )
                 } else {
                     openDialog = true
                 }

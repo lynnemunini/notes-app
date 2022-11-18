@@ -125,7 +125,7 @@ fun NoteCard(note: Note, onRemoveNote: (Note) -> Unit) {
                 },
                 imageVector = Icons.Sharp.Delete,
                 contentDescription = "Delete",
-                tint = Color(0xFFefcd95)
+                tint = Color.Red.copy(alpha = .4f)
             )
         }
     }
@@ -136,7 +136,7 @@ fun FloatingAddNoteButton(navController: NavController) {
     FloatingActionButton(
         modifier = Modifier.padding(bottom = 30.dp),
         onClick = { navController.navigate(route = NoteScreens.NoteScreen.name) },
-        containerColor = Color(0xFFefcd95)
+        containerColor = Color(0xFFdaaac0)
     )
 
     {
