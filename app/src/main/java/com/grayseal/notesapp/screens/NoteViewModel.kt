@@ -12,22 +12,16 @@ import kotlinx.coroutines.flow.update
 class NoteViewModel(
 ) : ViewModel() {
 
-    /*private var noteList = mutableListOf<Note>()*/
+    private var noteList = mutableListOf<Note>()
 
     private val _uiState = MutableStateFlow(NoteUiState())
     private val uiState: StateFlow<NoteUiState> = _uiState.asStateFlow()
 
-    init {
-        uiState.value.notes
-    }
-
-
-    /*Business Logic*/
     fun addNote(note: Note) {
-        /*noteList.add(note)*/
+        noteList.add(note)
         _uiState.update {currentState ->
             currentState.copy(
-                notes = listOf(note)
+                notes = noteList
             )
         }
     }
