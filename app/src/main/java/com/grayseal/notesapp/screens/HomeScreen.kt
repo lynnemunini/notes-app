@@ -1,6 +1,7 @@
 package com.grayseal.notesapp.screens
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -8,10 +9,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.sharp.Delete
+import androidx.compose.material.icons.sharp.DeleteForever
 import androidx.compose.material.icons.sharp.Eco
 import androidx.compose.material.icons.sharp.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -62,7 +68,7 @@ fun HomeContent(noteViewModel: NoteViewModel) {
     Column(modifier = Modifier.padding(20.dp)) {
         LazyColumn {
             items(notesList) {
-                NoteCard(note = it)
+                NoteCard(note = it, onRemoveNote = { noteViewModel.deleteNote(it) })
             }
         }
     }
@@ -70,10 +76,10 @@ fun HomeContent(noteViewModel: NoteViewModel) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NoteCard(note: Note) {
+fun NoteCard(note: Note, onRemoveNote: (Note) -> Unit) {
     OutlinedCard(
         onClick = {
-            /*noteViewModel.removeNote(note) TODO*/
+            /*noteViewModel.removeNote(note)*/
         },
         modifier = Modifier
             .fillMaxWidth()
@@ -108,10 +114,19 @@ fun NoteCard(note: Note) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp), horizontalArrangement = Arrangement.End
+                .padding(8.dp), horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Spacer(Modifier.height(15.dp))
             Text(note.date, fontSize = 12.sp, color = Color.LightGray, fontFamily = sonoFamily)
+            Spacer(Modifier.weight(2f))
+            Icon(
+                modifier = Modifier.clickable{
+                    onRemoveNote(note)
+                },
+                imageVector = Icons.Sharp.Delete,
+                contentDescription = "Delete",
+                tint = Color(0xFFefcd95)
+            )
         }
     }
 }
@@ -121,7 +136,6 @@ fun FloatingAddNoteButton(navController: NavController) {
     FloatingActionButton(
         modifier = Modifier.padding(bottom = 30.dp),
         onClick = { navController.navigate(route = NoteScreens.NoteScreen.name) },
-        //shape = CircleShape,
         containerColor = Color(0xFFefcd95)
     )
 
@@ -156,7 +170,7 @@ fun Avatar() {
                 .padding(end = 20.dp, bottom = 10.dp),
             horizontalArrangement = Arrangement.End
         ) {
-            //Text("Lynne", fontSize = 20.sp, fontFamily = sonoFamily, fontWeight = FontWeight.ExtraLight)
+            /*Text("Lynne", fontSize = 20.sp, fontFamily = sonoFamily, fontWeight = FontWeight.ExtraLight)*/
         }
 
     }
