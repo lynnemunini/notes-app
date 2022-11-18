@@ -68,7 +68,7 @@ fun HomeContent(noteViewModel: NoteViewModel = viewModel()) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NoteCard(note: Note, noteViewModel: NoteViewModel = viewModel()){
+fun NoteCard(note: Note){
     OutlinedCard(onClick = {
         /*noteViewModel.removeNote(note) TODO*/},
         modifier = Modifier
