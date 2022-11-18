@@ -10,14 +10,10 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.Delete
-import androidx.compose.material.icons.sharp.DeleteForever
 import androidx.compose.material.icons.sharp.Eco
 import androidx.compose.material.icons.sharp.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -120,7 +116,7 @@ fun NoteCard(note: Note, onRemoveNote: (Note) -> Unit) {
             Text(note.date, fontSize = 12.sp, color = Color.LightGray, fontFamily = sonoFamily)
             Spacer(Modifier.weight(2f))
             Icon(
-                modifier = Modifier.clickable{
+                modifier = Modifier.clickable {
                     onRemoveNote(note)
                 },
                 imageVector = Icons.Sharp.Delete,
