@@ -33,7 +33,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun NoteScreen(navController: NavController) {
+fun NoteScreen(navController: NavController, notesViewModel: NoteViewModel) {
     NoteContent(navController = navController)
 }
 
