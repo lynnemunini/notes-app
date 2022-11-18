@@ -19,20 +19,21 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.grayseal.notesapp.model.Note
 import com.grayseal.notesapp.navigation.NoteScreens
 import com.grayseal.notesapp.ui.theme.sonoFamily
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, noteViewModel: NoteViewModel) {
     Scaffold(
-        floatingActionButton = { FloatingAddNoteButton(navController = navController)},
+        floatingActionButton = { FloatingAddNoteButton(navController = navController) },
         content = { padding ->
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .padding(padding)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(padding)
+            ) {
                 Avatar()
                 Row(
                     modifier = Modifier
@@ -47,19 +48,20 @@ fun HomeScreen(navController: NavController) {
                         fontWeight = FontWeight.Bold
                     )
                 }
-                HomeContent()
-            }},)
-    }
+                HomeContent(noteViewModel = noteViewModel)
+            }
+        },
+    )
+}
 
 
 @Composable
-fun HomeContent(noteViewModel: NoteViewModel = viewModel()) {
-
+fun HomeContent(noteViewModel: NoteViewModel) {
     /*get all Notes*/
     val notesList = noteViewModel.getAllNotes()
     Column(modifier = Modifier.padding(20.dp)) {
-        LazyColumn{
-            items(notesList){
+        LazyColumn {
+            items(notesList) {
                 NoteCard(note = it)
             }
         }
@@ -68,9 +70,11 @@ fun HomeContent(noteViewModel: NoteViewModel = viewModel()) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NoteCard(note: Note){
-    OutlinedCard(onClick = {
-        /*noteViewModel.removeNote(note) TODO*/},
+fun NoteCard(note: Note) {
+    OutlinedCard(
+        onClick = {
+            /*noteViewModel.removeNote(note) TODO*/
+        },
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 10.dp, bottom = 20.dp)
@@ -84,16 +88,30 @@ fun NoteCard(note: Note){
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
-            Text(note.title, fontSize = 18.sp, color = Color.DarkGray, fontFamily = sonoFamily, fontWeight = FontWeight.Bold)
+            Text(
+                note.title,
+                fontSize = 18.sp,
+                color = Color.DarkGray,
+                fontFamily = sonoFamily,
+                fontWeight = FontWeight.Bold
+            )
             Spacer(Modifier.height(15.dp))
-            Text(note.note, fontSize = 14.sp, color = Color(0xFF92a4a2), fontFamily = sonoFamily, fontWeight = FontWeight.Normal)
+            Text(
+                note.note,
+                fontSize = 14.sp,
+                color = Color(0xFF92a4a2),
+                fontFamily = sonoFamily,
+                fontWeight = FontWeight.Normal
+            )
             Spacer(Modifier.height(15.dp))
         }
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp), horizontalArrangement = Arrangement.End) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp), horizontalArrangement = Arrangement.End
+        ) {
             Spacer(Modifier.height(15.dp))
-            Text(note.date,fontSize = 12.sp, color = Color.LightGray, fontFamily = sonoFamily)
+            Text(note.date, fontSize = 12.sp, color = Color.LightGray, fontFamily = sonoFamily)
         }
     }
 }
@@ -117,7 +135,7 @@ fun FloatingAddNoteButton(navController: NavController) {
 }
 
 @Composable
-fun Avatar(){
+fun Avatar() {
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier

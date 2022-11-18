@@ -24,7 +24,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.grayseal.notesapp.model.Note
 import com.grayseal.notesapp.navigation.NoteScreens
@@ -33,12 +32,12 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun NoteScreen(navController: NavController) {
-    NoteContent(navController = navController)
+fun NoteScreen(navController: NavController, noteViewModel: NoteViewModel) {
+    NoteContent(navController = navController, noteViewModel = noteViewModel)
 }
 
 @Composable
-fun NoteContent(navController: NavController) {
+fun NoteContent(navController: NavController, noteViewModel: NoteViewModel) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             Row(
@@ -70,20 +69,24 @@ fun NoteContent(navController: NavController) {
                         )
                     })
             }
-            NoteArea(navController = navController)
+            NoteArea(navController = navController, noteViewModel = noteViewModel)
         }
     }
 }
 
 @Composable
-fun NoteArea(navController: NavController, noteViewModel: NoteViewModel = viewModel()) {
+fun NoteArea(navController: NavController, noteViewModel: NoteViewModel) {
     var note by remember {
         mutableStateOf("")
     }
     var title by remember {
         mutableStateOf("")
     }
-    SaveButton(navController = navController, title, note, onSaveNote = { noteViewModel.addNote(it) })
+    SaveButton(
+        navController = navController,
+        title,
+        note,
+        onSaveNote = { noteViewModel.addNote(it) })
     Note(title = title, note = note, onTitleChange = { title = it }, onNoteChange = { note = it })
 }
 
@@ -224,7 +227,7 @@ fun SaveButton(
                     title = ""
                     note = ""
                     */
-                    navController.navigate(route = NoteScreens.HomeScreen.name, )
+                    navController.navigate(route = NoteScreens.HomeScreen.name)
                 } else {
                     openDialog = true
                 }
@@ -252,7 +255,7 @@ fun AlertDialog(openDialog: Boolean, onDismiss: () -> Unit) {
                    onDismissRequest. */
             onDismissRequest = onDismiss,
             title = {
-                Row() {
+                Row {
                     Icon(
                         imageVector = Icons.Outlined.Info,
                         contentDescription = "Alert",

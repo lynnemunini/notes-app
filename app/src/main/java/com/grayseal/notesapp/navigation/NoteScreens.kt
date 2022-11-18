@@ -5,9 +5,9 @@ enum class NoteScreens {
     WelcomeScreen,
     HomeScreen,
     NoteScreen;
+
     companion object {
-        fun fromRoute(route: String?): NoteScreens
-        = when (route?.substringBefore("/")) {
+        fun fromRoute(route: String?): NoteScreens = when (route?.substringBefore("/")) {
             SplashScreen.name -> SplashScreen
             WelcomeScreen.name -> WelcomeScreen
             HomeScreen.name -> HomeScreen
