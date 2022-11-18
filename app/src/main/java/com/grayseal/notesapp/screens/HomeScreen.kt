@@ -26,7 +26,7 @@ import com.grayseal.notesapp.navigation.NoteScreens
 import com.grayseal.notesapp.ui.theme.sonoFamily
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, notesViewModel: NoteViewModel) {
     Scaffold(
         floatingActionButton = { FloatingAddNoteButton(navController = navController)},
         content = { padding ->
