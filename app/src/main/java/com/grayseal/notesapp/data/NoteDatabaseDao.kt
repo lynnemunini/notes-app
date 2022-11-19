@@ -17,22 +17,22 @@ interface NoteDatabaseDao {
 
     /*Return note with a specific id*/
     @Query("SELECT * from notes where id =:id")
-    fun getNoteById(id: String): Note
+    suspend fun getNoteById(id: String): Note
 
     /*Insert a note to database. If there's any conflict or errors it's replaced with new one*/
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(note: Note)
+    suspend fun insert(note: Note)
 
     /*Update*/
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun update(note: Note)
+    suspend fun update(note: Note)
 
     /*Delete All*/
     @Query("DELETE from notes")
-    fun deleteAll()
+    suspend fun deleteAll()
 
     /*Delete a note*/
     @Delete
-    fun deleteNote(note: Note)
+    suspend fun deleteNote(note: Note)
 
 }
