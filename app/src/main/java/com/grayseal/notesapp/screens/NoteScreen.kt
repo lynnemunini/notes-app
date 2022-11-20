@@ -30,6 +30,7 @@ import com.grayseal.notesapp.navigation.NoteScreens
 import com.grayseal.notesapp.ui.theme.sonoFamily
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 @Composable
 fun NoteScreen(navController: NavController, noteViewModel: NoteViewModel) {
@@ -104,7 +105,7 @@ fun Note(
         horizontalArrangement = Arrangement.Start
     ) {
         Text(
-            getCurrentDate(),
+            text = getCurrentDate(),
             style = (TextStyle(fontSize = 18.sp, color = Color(0xFFefcd95))),
             fontFamily = sonoFamily,
             fontWeight = FontWeight.Normal

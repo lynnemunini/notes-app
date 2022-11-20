@@ -7,13 +7,15 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.grayseal.notesapp.model.Note
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDatabaseDao {
 
     /*Return list of notes from database*/
     @Query("SELECT * from notes")
-    fun getNotes(): List<Note>
+    fun getNotes():
+            Flow<List<Note>>
 
     /*Return note with a specific id*/
     @Query("SELECT * from notes where id =:id")

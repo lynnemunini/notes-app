@@ -113,7 +113,7 @@ fun NoteCard(note: Note, onRemoveNote: (Note) -> Unit) {
                 .padding(8.dp), horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Spacer(Modifier.height(15.dp))
-            Text(note.date, fontSize = 12.sp, color = Color.LightGray, fontFamily = sonoFamily)
+            Text(note.entry_date.toString(), fontSize = 12.sp, color = Color.LightGray, fontFamily = sonoFamily)
             Spacer(Modifier.weight(2f))
             Icon(
                 modifier = Modifier.clickable {
