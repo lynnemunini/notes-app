@@ -10,7 +10,7 @@ import com.grayseal.notesapp.screens.*
 @Composable
 fun NoteNavigation() {
     val navController = rememberNavController()
-    val noteViewModel: NoteViewModel = viewModel()
+    val noteViewModel = viewModel<NoteViewModel>()
     NavHost(navController = navController, startDestination = NoteScreens.SplashScreen.name) {
         composable(NoteScreens.SplashScreen.name) {
             SplashScreen(navController = navController)

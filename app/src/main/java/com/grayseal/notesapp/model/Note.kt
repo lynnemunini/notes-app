@@ -3,7 +3,7 @@ package com.grayseal.notesapp.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.grayseal.notesapp.screens.getCurrentDate
+import com.grayseal.notesapp.util.getCurrentDate
 import java.util.*
 
 @Entity(tableName = "notes")

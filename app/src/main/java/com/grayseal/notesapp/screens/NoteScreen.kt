@@ -28,6 +28,7 @@ import androidx.navigation.NavController
 import com.grayseal.notesapp.model.Note
 import com.grayseal.notesapp.navigation.NoteScreens
 import com.grayseal.notesapp.ui.theme.sonoFamily
+import com.grayseal.notesapp.util.getCurrentDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -292,9 +293,3 @@ fun AlertDialog(openDialog: Boolean, onDismiss: () -> Unit) {
     }
 }
 
-fun getCurrentDate(): String {
-    // Get Current Date time in localized style
-    val current = LocalDateTime.now()
-    val formatter = DateTimeFormatter.ofPattern("EEE, d MMM y")
-    return current.format(formatter)
-}

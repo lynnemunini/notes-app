@@ -51,21 +51,28 @@ fun HomeScreen(navController: NavController, noteViewModel: NoteViewModel) {
                         fontWeight = FontWeight.Bold
                     )
                 }
-                HomeContent(noteViewModel = noteViewModel)
+                Home(noteViewModel = noteViewModel)
             }
         },
     )
 }
-
-
 @Composable
-fun HomeContent(noteViewModel: NoteViewModel) {
+fun Home(noteViewModel: NoteViewModel){
     /*get all Notes*/
     val notesList = noteViewModel.noteList.collectAsState().value
+    HomeContent(notes = notesList, onRemoveNote = {noteViewModel.deleteNote(it)})
+}
+
+@Composable
+fun HomeContent(
+    notes: List<Note>,
+    onRemoveNote: (Note) -> Unit
+) {
+
     Column(modifier = Modifier.padding(20.dp)) {
         LazyColumn {
-            items(notesList) {
-                NoteCard(note = it, onRemoveNote = { noteViewModel.deleteNote(it) })
+            items(notes) {
+                NoteCard(note = it, onIconClicked = { onRemoveNote(it) })
             }
         }
     }
@@ -73,11 +80,12 @@ fun HomeContent(noteViewModel: NoteViewModel) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NoteCard(note: Note, onRemoveNote: (Note) -> Unit) {
+fun NoteCard(note: Note, onIconClicked: (Note) -> Unit) {
     OutlinedCard(
         onClick = {
-            /*noteViewModel.removeNote(note)*/
+                  /*onIconClicked(note)*/
         },
+        enabled = false,
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 10.dp, bottom = 20.dp)
@@ -114,15 +122,15 @@ fun NoteCard(note: Note, onRemoveNote: (Note) -> Unit) {
                 .padding(8.dp), horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Spacer(Modifier.height(15.dp))
-            Text(note.entry_date.toString(), fontSize = 12.sp, color = Color.LightGray, fontFamily = sonoFamily)
+            Text(note.entry_date, fontSize = 12.sp, color = Color.LightGray, fontFamily = sonoFamily)
             Spacer(Modifier.weight(2f))
             Icon(
                 modifier = Modifier.clickable {
-                    onRemoveNote(note)
+                    onIconClicked(note)
                 },
                 imageVector = Icons.Sharp.Delete,
                 contentDescription = "Delete",
-                tint = Color.Red.copy(alpha = .4f)
+                tint = Color.Red.copy(alpha = .5f)
             )
         }
     }
