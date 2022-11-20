@@ -14,6 +14,7 @@ import androidx.compose.material.icons.sharp.Eco
 import androidx.compose.material.icons.sharp.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -60,7 +61,7 @@ fun HomeScreen(navController: NavController, noteViewModel: NoteViewModel) {
 @Composable
 fun HomeContent(noteViewModel: NoteViewModel) {
     /*get all Notes*/
-    val notesList = noteViewModel.getAllNotes()
+    val notesList = noteViewModel.noteList.collectAsState().value
     Column(modifier = Modifier.padding(20.dp)) {
         LazyColumn {
             items(notesList) {

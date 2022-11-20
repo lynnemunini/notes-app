@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="pink_200">#FFdeb7c5</color>
     <color name="pink_500">#FFdaaac0</color>
-    <color name="pink_700">#FFaf7184</color>
-    <color name="grey">#FF92a4a2</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
